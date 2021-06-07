@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "desafioserasa": {
+      "hosting": {
+        "desafioSerasa": [
+          "desafioserasa"
+        ]
+      }
+    }
+  }
+}
