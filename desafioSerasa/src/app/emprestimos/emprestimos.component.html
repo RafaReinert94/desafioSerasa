@@ -1,1 +1,18 @@
-<p>emprestimos works!</p>
+<mat-card class="m-3">
+  <mat-card-header>
+    <mat-card-title>Empréstimos</mat-card-title>
+  </mat-card-header>
+</mat-card>
+
+<mat-card *ngFor="let emprestimo of emprestimos | async" class="m-3">
+    <mat-progress-bar mode="determinate" value="{{(emprestimo.parcelasPagas/emprestimo.parcelas)*100}}"></mat-progress-bar>
+    <mat-card-content>
+      ({{emprestimo.parcelasPagas}} / {{emprestimo.parcelas}})
+    </mat-card-content>
+    <mat-card-content>
+      <button mat-raised-button color="primary"
+      matBadge="8" matBadgePosition="before" matBadgeColor="accent">
+    Action
+  </button>
+    </mat-card-content>
+</mat-card>

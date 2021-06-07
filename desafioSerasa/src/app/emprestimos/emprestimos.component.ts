@@ -1,4 +1,7 @@
+import { Emprestimo } from './../model/emprestimo.interface';
+import { FirestoredbService } from './../db/firestoredb.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-emprestimos',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmprestimosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private fsdb: FirestoredbService) { }
+
+
+  emprestimos: Observable<Emprestimo[]>;
 
   ngOnInit(): void {
+    this.emprestimos = this.fsdb.getEmprestimosDoUsuario();
   }
+
+
 
 }

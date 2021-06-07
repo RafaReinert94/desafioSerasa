@@ -1,4 +1,7 @@
+import { FirestoredbService } from './../db/firestoredb.service';
 import { Component, OnInit } from '@angular/core';
+import { User } from '../model/user.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
+  usuario: User
+
+  constructor(private fsdb: FirestoredbService, private router: Router) { }
+
+  async ngOnInit() {
+
+    this.usuario = await this.fsdb.getFakeUser();
+    console.log(this.usuario);
   }
+
+  goEmprestimos(){
+    this.router.navigate(['emprestimos']);
+  }
+
+
 
 }

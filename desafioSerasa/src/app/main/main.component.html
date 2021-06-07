@@ -1,1 +1,15 @@
-<p>main works!</p>
+<div *ngIf="usuario; else loading">
+  <div class="m-3">
+    Olá, {{usuario.nome}}.
+  </div>
+  <div class="m-3" >
+    <button mat-raised-button color="accent" (click)="goEmprestimos()" >Emprestimos</button>
+  </div>
+
+</div>
+
+
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
