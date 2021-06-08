@@ -4,10 +4,11 @@
   </mat-card-header>
 </mat-card>
 
-<mat-card *ngFor="let emprestimo of emprestimos | async" class="m-3">
-    <mat-progress-bar mode="determinate" value="{{(emprestimo.parcelasPagas/emprestimo.parcelas)*100}}"></mat-progress-bar>
+<mat-card *ngFor="let emprestimoUsuario of emprestimosUsuario | async" class="m-3">
+    <mat-card-subtitle>Meu empréstimo</mat-card-subtitle>
+    <mat-progress-bar mode="determinate" value="{{(emprestimoUsuario.parcelasPagas/emprestimoUsuario.parcelas)*100}}"></mat-progress-bar>
     <mat-card-content>
-      ({{emprestimo.parcelasPagas}} / {{emprestimo.parcelas}})
+      ({{emprestimoUsuario.parcelasPagas}} / {{emprestimoUsuario.parcelas}})
     </mat-card-content>
     <mat-card-content>
       <button mat-raised-button color="primary"
@@ -16,3 +17,44 @@
   </button>
     </mat-card-content>
 </mat-card>
+
+<mat-card *ngFor="let emprestimo of emprestimos | async" class="m-3 "  >
+  <mat-card-title>{{emprestimo.valor}} reais</mat-card-title>
+  <mat-card-subtitle>taxa {{emprestimo.taxa}} a.m.</mat-card-subtitle>
+  <mat-card-content align="right">
+    <button mat-raised-button color="accent" (click)="modalInformacoesEmprestimo(informacoesEmprestimo)">
+      Saiba mais
+    </button>
+  </mat-card-content>
+
+  <!-- Modal para informações do empréstimo -->
+  <ng-template #informacoesEmprestimo let-modal>
+    <mat-card>
+      <mat-card-title>{{emprestimo.valor}} reais</mat-card-title>
+      <mat-card-subtitle>taxa {{emprestimo.taxa}} a.m.</mat-card-subtitle>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Parcelas</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let parcela of parcelas" [value]="parcela.value" (click)="calcularValorTotal(parcela, emprestimo)">
+              {{parcela.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-content>
+        Valor Total: {{valorTotal}}
+      </mat-card-content>
+      <mat-card-content align="right">
+        <button mat-raised-button color="accent" (click)="contratarEmprestimo(parcela)">
+          Contratar
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+  </ng-template>
+
+</mat-card>
+
+
+

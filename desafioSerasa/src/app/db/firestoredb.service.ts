@@ -25,4 +25,8 @@ export class FirestoredbService {
     return this.afs.collection('usuario').doc('ritCXCcIQ4qSIyYXAxCI').collection('emprestimos').valueChanges();
   }
 
+  emprestimosDisponiveis(): Observable<Emprestimo[]>{
+    return this.afs.collection('emprestimos', ref => ref.orderBy('valor')).valueChanges();
+  }
+
 }
