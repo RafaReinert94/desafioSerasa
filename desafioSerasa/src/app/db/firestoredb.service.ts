@@ -29,4 +29,9 @@ export class FirestoredbService {
     return this.afs.collection('emprestimos', ref => ref.orderBy('valor')).valueChanges();
   }
 
+  salvarEmprestimo(emprestimo:Emprestimo){
+    emprestimo.uid = this.afs.createId();
+    this.afs.collection('usuario').doc('ritCXCcIQ4qSIyYXAxCI').collection('emprestimos').doc(emprestimo.uid).set(emprestimo);
+  }
+
 }

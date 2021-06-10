@@ -1,11 +1,11 @@
 <mat-card class="m-3">
-  <mat-card-header>
+  <mat-card-content>
     <mat-card-title>Empréstimos</mat-card-title>
-  </mat-card-header>
+  </mat-card-content>
 </mat-card>
 
 <mat-card *ngFor="let emprestimoUsuario of emprestimosUsuario | async" class="m-3">
-    <mat-card-subtitle>Meu empréstimo</mat-card-subtitle>
+    <mat-card-subtitle>Empréstimo</mat-card-subtitle>
     <mat-progress-bar mode="determinate" value="{{(emprestimoUsuario.parcelasPagas/emprestimoUsuario.parcelas)*100}}"></mat-progress-bar>
     <mat-card-content>
       ({{emprestimoUsuario.parcelasPagas}} / {{emprestimoUsuario.parcelas}})
@@ -22,7 +22,7 @@
   <mat-card-title>{{emprestimo.valor}} reais</mat-card-title>
   <mat-card-subtitle>taxa {{emprestimo.taxa}} a.m.</mat-card-subtitle>
   <mat-card-content align="right">
-    <button mat-raised-button color="accent" (click)="modalInformacoesEmprestimo(informacoesEmprestimo)">
+    <button mat-raised-button color="accent" (click)="modalInformacoesEmprestimo(informacoesEmprestimo, emprestimo)">
       Saiba mais
     </button>
   </mat-card-content>
@@ -46,7 +46,7 @@
         Valor Total: {{valorTotal}}
       </mat-card-content>
       <mat-card-content align="right">
-        <button mat-raised-button color="accent" (click)="contratarEmprestimo(parcela)">
+        <button mat-raised-button color="accent" (click)="contratarEmprestimo(emprestimo)" (click)="modal.close()">
           Contratar
         </button>
       </mat-card-content>

@@ -13,37 +13,16 @@ export class EmprestimosComponent implements OnInit {
 
   constructor(private fsdb: FirestoredbService, private modalService: NgbModal) { }
 
-
+  //variaveis do banco de dados, utilizando observable
   emprestimosUsuario: Observable<Emprestimo[]>;
   emprestimos: Observable<Emprestimo[]>;
 
-  parcelas = [
-    {value: 1, viewValue: '1 x Parcela'},
-    {value: 2, viewValue: '2 x Parcelas'},
-    {value: 3, viewValue: '3 x Parcelas'},
-    {value: 4, viewValue: '4 x Parcelas'},
-    {value: 5, viewValue: '5 x Parcelas'},
-    {value: 6, viewValue: '6 x Parcelas'},
-    {value: 7, viewValue: '7 x Parcelas'},
-    {value: 8, viewValue: '8 x Parcelas'},
-    {value: 9, viewValue: '9 x Parcelas'},
-    {value: 10, viewValue: '10 x Parcelas'},
-    {value: 11, viewValue: '11 x Parcelas'},
-    {value: 12, viewValue: '12 x Parcelas'},
-    {value: 13, viewValue: '13 x Parcelas'},
-    {value: 14, viewValue: '14 x Parcelas'},
-    {value: 15, viewValue: '15 x Parcelas'},
-    {value: 16, viewValue: '16 x Parcelas'},
-    {value: 17, viewValue: '17 x Parcelas'},
-    {value: 18, viewValue: '18 x Parcelas'},
-    {value: 19, viewValue: '19 x Parcelas'},
-    {value: 20, viewValue: '20 x Parcelas'},
-    {value: 21, viewValue: '21 x Parcelas'},
-    {value: 22, viewValue: '22 x Parcelas'},
-    {value: 23, viewValue: '23 x Parcelas'},
-    {value: 24, viewValue: '24 x Parcelas'},
 
-  ];
+  //Variaveis referentes ao modal de informaçoes do empréstimo
+  numMaximoDeParcelas:number = 24;
+  parcelas:{value, viewValue, valorParcelas}[];
+  parcelaEscolhida:{value, viewValue, valorParcelas};
+
 
   emprestimoContratado: Emprestimo;
 
@@ -54,18 +33,33 @@ export class EmprestimosComponent implements OnInit {
     this.emprestimos = this.fsdb.emprestimosDisponiveis();
   }
 
-  modalInformacoesEmprestimo(informacoesEmprestimo){
+  modalInformacoesEmprestimo(informacoesEmprestimo, emprestimo:Emprestimo){
+
+    this.parcelas=[];
+
+    for (let index = 0; index < this.numMaximoDeParcelas; index++) {
+      this.parcelas[index] = {
+        value: index+1,
+        viewValue: ''+(index+1)+' x '+ parseFloat(((emprestimo.valor*((1+(emprestimo.taxa/100))**(index+1)))/(index+1)).toFixed(2)),
+        valorParcelas: parseFloat(((emprestimo.valor*((1+(emprestimo.taxa/100))**(index+1)))/(index+1)).toFixed(2))
+      };
+    }
+    console.log(this.parcelas)
     this.valorTotal = 0;
     this.modalService.open(informacoesEmprestimo);
   }
 
-  contratarEmprestimo(parcela:number, ){
-
+  contratarEmprestimo(emprestimo: Emprestimo){
+    emprestimo.parcelasPagas = 0;
+    emprestimo.parcelas = this.parcelaEscolhida.value;
+    emprestimo.valorParcela = this.parcelaEscolhida.valorParcelas;
+    emprestimo.valorTotal = this.valorTotal;
+    this.fsdb.salvarEmprestimo(emprestimo);
   }
 
   calcularValorTotal(parcela, emprestimo:Emprestimo){
-    this.valorTotal = parseFloat((emprestimo.valor*((1+(emprestimo.taxa/100))**parcela.value)).toFixed(2));
-
+    this.parcelaEscolhida = parcela;
+    this.valorTotal = parseFloat((parcela.value * parseFloat(((emprestimo.valor*((1+(emprestimo.taxa/100))**(parcela.value)))/(parcela.value)).toFixed(2))).toFixed(2));
   }
 
 
