@@ -28,6 +28,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatListModule} from '@angular/material/list';
+
 
 
 
@@ -59,6 +61,7 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatIconModule,
     MatProgressBarModule,
     MatBadgeModule,
+    MatListModule,
 
     NgbModule,
 

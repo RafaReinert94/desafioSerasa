@@ -6,4 +6,11 @@ export interface Emprestimo {
   parcelasPagas?: number;
   valorParcela?: number;
   valorTotal?: number;
+  dataDaContratação?: Date;
+  parcelasJaPagas?:{
+    valorParcelas?:number,
+    dataPagamento?: Date,
+    dataVencimento?: Date,
+    jurosAdicionais?: number
+  }[];
 }
