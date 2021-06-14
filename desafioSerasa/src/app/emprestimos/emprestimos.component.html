@@ -1,22 +1,65 @@
+
 <mat-card class="m-3">
   <mat-card-content>
     <mat-card-title>Empréstimos</mat-card-title>
   </mat-card-content>
 </mat-card>
 
-<mat-card *ngFor="let emprestimoUsuario of emprestimosUsuario | async" class="m-3">
-    <mat-card-subtitle>Empréstimo</mat-card-subtitle>
-    <mat-progress-bar mode="determinate" value="{{(emprestimoUsuario.parcelasPagas/emprestimoUsuario.parcelas)*100}}"></mat-progress-bar>
-    <mat-card-content>
-      ({{emprestimoUsuario.parcelasPagas}} / {{emprestimoUsuario.parcelas}})
-    </mat-card-content>
-    <mat-card-content>
-      <button mat-raised-button color="primary"
-      matBadge="8" matBadgePosition="before" matBadgeColor="accent">
-    Action
-  </button>
-    </mat-card-content>
-</mat-card>
+<div *ngFor="let emprestimoUsuario of emprestimosUsuario | async" class="m-3">
+  <mat-card *ngIf="emprestimoUsuario.pendencia" >
+      <mat-card-title >Empréstimo</mat-card-title>
+      <mat-progress-bar mode="determinate" value="{{(emprestimoUsuario.parcelasPagas/emprestimoUsuario.numeroDeParcelas)*100}}"></mat-progress-bar>
+      <mat-card-content>
+        <div class="row">
+          <div class="col" >
+           Vencimento:
+          </div>
+          <div class="col" >
+            {{emprestimoUsuario.parcelas[emprestimoUsuario.parcelasPagas].dataVencimento | date}}
+          </div>
+          <div class="col" align="right">
+            ({{emprestimoUsuario.parcelasPagas}} / {{emprestimoUsuario.numeroDeParcelas}})
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-card>
+              <div class="col">
+                <div class="row">
+                  <button mat-button  color="accent">
+                    R$: {{emprestimoUsuario.parcelas[emprestimoUsuario.parcelasPagas].valorParcelas}}
+                  </button>
+                </div>
+                <div class="row">
+                  <button class="btn-block" mat-raised-button color="primary" (click)="pagarUmaParcela(emprestimoUsuario)">
+                    Pagar
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col">
+            <mat-card>
+              <div class="col">
+                <div class="row">
+                  <button mat-button  color="accent">
+                    R$: {{(emprestimoUsuario.numeroDeParcelas - emprestimoUsuario.parcelasPagas)*emprestimoUsuario.parcelas[emprestimoUsuario.parcelasPagas].valorParcelas}}
+                  </button>
+                </div>
+                <div class="row">
+                  <button class="btn-block" mat-raised-button color="primary" (click)="quitarEmprestimo(emprestimoUsuario)">
+                    Quitar
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+  </mat-card>
+</div>
 
 <mat-card *ngFor="let emprestimo of emprestimos | async" class="m-3 "  >
   <mat-card-title>{{emprestimo.valor}} reais</mat-card-title>
@@ -38,7 +81,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Parcelas</mat-label>
             <mat-select>
-              <mat-option *ngFor="let parcela of parcelas" [value]="parcela.value" (click)="calcularValorTotal(parcela, emprestimo)">
+              <mat-option *ngFor="let parcela of parcelasEmprestimoOferecido" [value]="parcela.value" (click)="calcularValorTotal(parcela, emprestimo)">
                 {{parcela.viewValue}}
               </mat-option>
             </mat-select>

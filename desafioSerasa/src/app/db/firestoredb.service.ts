@@ -34,4 +34,8 @@ export class FirestoredbService {
     this.afs.collection('usuario').doc('ritCXCcIQ4qSIyYXAxCI').collection('emprestimos').doc(emprestimo.uid).set(emprestimo);
   }
 
+  atualizarEmprestimo(emprestimo: Emprestimo){
+    this.afs.collection('usuario').doc('ritCXCcIQ4qSIyYXAxCI').collection('emprestimos').doc(emprestimo.uid).set(emprestimo);
+  }
+
 }

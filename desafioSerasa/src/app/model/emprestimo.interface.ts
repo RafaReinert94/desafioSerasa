@@ -2,15 +2,15 @@ export interface Emprestimo {
   uid?: string;
   valor?: number;
   taxa?: number;
-  parcelas?: number;
+  numeroDeParcelas?: number;
   parcelasPagas?: number;
-  valorParcela?: number;
   valorTotal?: number;
-  dataDaContratação?: Date;
-  parcelasJaPagas?:{
+  dataDaContratação?: number;
+  parcelas?:{
     valorParcelas?:number,
-    dataPagamento?: Date,
-    dataVencimento?: Date,
+    dataPagamento?: number,
+    dataVencimento?: number,
     jurosAdicionais?: number
   }[];
+  pendencia?: boolean;
 }
