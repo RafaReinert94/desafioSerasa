@@ -36,7 +36,7 @@ export class FirestoredbService {
 
   atualizarEmprestimo(emprestimo: Emprestimo, mensagem:string){
     this.afs.collection('usuario').doc('ritCXCcIQ4qSIyYXAxCI').collection('emprestimos').doc(emprestimo.uid).
-    set(emprestimo).then(()=>{alert(mensagem)});
+    set(emprestimo).then(()=>{alert(mensagem)}).catch((error)=>{alert("Não possivel realizar a operação. Erro: "+error)});
   }
 
 }
