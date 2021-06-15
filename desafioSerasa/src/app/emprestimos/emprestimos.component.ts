@@ -93,16 +93,22 @@ export class EmprestimosComponent implements OnInit {
     if(emprestimo.parcelasPagas==emprestimo.numeroDeParcelas){
       emprestimo.pendencia = false;
     };
-    this.fsdb.atualizarEmprestimo(emprestimo);
+    let mensagem = "Parcela paga com sucesso!"
+    this.fsdb.atualizarEmprestimo(emprestimo,mensagem);
   }
 
+
   quitarEmprestimo(emprestimo: Emprestimo){
-    for (let index = 0; index < emprestimo.parcelas.length; index++) {
-      emprestimo.parcelas[index].dataPagamento = Date.now();
+    let resultado = confirm("Deseja quitar o emprestimo?");
+    if(resultado==true){
+      for (let index = 0; index < emprestimo.parcelas.length; index++) {
+        emprestimo.parcelas[index].dataPagamento = Date.now();
+      }
+      emprestimo.parcelasPagas = emprestimo.numeroDeParcelas;
+      emprestimo.pendencia = false;
+      let mensagem = "Emprestimo quitado com sucesso!"
+      this.fsdb.atualizarEmprestimo(emprestimo,mensagem);
     }
-    emprestimo.parcelasPagas = emprestimo.numeroDeParcelas;
-    emprestimo.pendencia = false;
-    this.fsdb.atualizarEmprestimo(emprestimo);
   }
 
 
