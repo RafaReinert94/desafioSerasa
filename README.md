@@ -5,6 +5,8 @@ Programa Código para TodXS – Edição Mobile da Serasa
 
 Para iniciar o programa desenvolvido basta clicar no link: 
 https://rafareinert94.github.io/desafioSerasa/desafioSerasa/
+Indico que utilizem a versão da Web para mobile. Fiz com uma aparência mais 
+voltada ao mobile, ja que o curso oferecido é para linguagem mobile.
 
 
 ------------------------------------------------------------------------------
