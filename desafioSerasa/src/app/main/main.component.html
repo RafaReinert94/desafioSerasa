@@ -1,9 +1,13 @@
 <div *ngIf="usuario; else loading">
-  <div class="m-3">
-    Olá, {{usuario.nome}}.
-  </div>
+  <mat-card class="m-3">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title> Olá, {{usuario.nome}}.</mat-card-title>
+      <mat-card-subtitle>Score: {{usuario.score}}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
   <div class="m-3" >
-    <button mat-raised-button color="accent" (click)="goEmprestimos()" >Emprestimos</button>
+    <button mat-raised-button color="accent" (click)="goEmprestimos()" >Empréstimos</button>
   </div>
 
 </div>

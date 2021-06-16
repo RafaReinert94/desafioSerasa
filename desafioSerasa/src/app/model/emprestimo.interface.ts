@@ -13,4 +13,5 @@ export interface Emprestimo {
     jurosAdicionais?: number
   }[];
   pendencia?: boolean;
+  scoreMinimo?: number;
 }

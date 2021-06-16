@@ -3,6 +3,7 @@ import { FirestoredbService } from './../db/firestoredb.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { User } from '../model/user.interface';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class EmprestimosComponent implements OnInit {
   emprestimosUsuario: Observable<Emprestimo[]>;
   emprestimos: Observable<Emprestimo[]>;
 
+  //usuario fake
+  usuario: User;
 
 
   //Variaveis referentes ao modal de informaçoes do empréstimo
@@ -35,9 +38,10 @@ export class EmprestimosComponent implements OnInit {
 
   valorTotal:number;
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.emprestimosUsuario = this.fsdb.getEmprestimosDoUsuario();
     this.emprestimos = this.fsdb.emprestimosDisponiveis();
+    this.usuario = await this.fsdb.getFakeUser()
 
   }
 
@@ -58,24 +62,34 @@ export class EmprestimosComponent implements OnInit {
   }
 
   contratarEmprestimo(emprestimo: Emprestimo){
-    emprestimo.parcelas = [];
-    let dataHoje = new Date();
-    let dataVencimentoParcela = new Date();
 
-    for (let index = 0; index < this.parcelaEscolhida.value; index++) {
-      emprestimo.parcelas[index] = {
-        valorParcelas: this.parcelaEscolhida.valorParcelas,
-        dataVencimento : dataVencimentoParcela.setMonth(dataHoje.getMonth()+(index+1)),
-        dataPagamento: null,
-       };
-       console.log(emprestimo.parcelas[index]);
+    if(this.usuario.score >= emprestimo.scoreMinimo){
+
+
+      emprestimo.parcelas = [];
+      let dataHoje = new Date();
+      let dataVencimentoParcela = new Date();
+
+      for (let index = 0; index < this.parcelaEscolhida.value; index++) {
+        emprestimo.parcelas[index] = {
+          valorParcelas: this.parcelaEscolhida.valorParcelas,
+          dataVencimento : dataVencimentoParcela.setMonth(dataVencimentoParcela.getMonth()+(1)),
+          dataPagamento: null,
+         };
+         console.log(emprestimo.parcelas[index]);
+      }
+      emprestimo.dataDaContratação = this.today;
+      emprestimo.parcelasPagas = 0;
+      emprestimo.numeroDeParcelas = this.parcelaEscolhida.value;
+      emprestimo.valorTotal = this.valorTotal;
+      emprestimo.pendencia = true;
+      this.fsdb.salvarEmprestimo(emprestimo);
+
+
+    }else{
+      alert("Seu Score é abaixo do recomendado, tente outro empréstimo")
     }
-    emprestimo.dataDaContratação = this.today;
-    emprestimo.parcelasPagas = 0;
-    emprestimo.numeroDeParcelas = this.parcelaEscolhida.value;
-    emprestimo.valorTotal = this.valorTotal;
-    emprestimo.pendencia = true;
-    this.fsdb.salvarEmprestimo(emprestimo);
+
 
   }
 

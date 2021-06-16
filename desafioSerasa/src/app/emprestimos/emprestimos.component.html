@@ -7,7 +7,7 @@
 
 <div *ngFor="let emprestimoUsuario of emprestimosUsuario | async" class="m-3">
   <mat-card *ngIf="emprestimoUsuario.pendencia" >
-      <mat-card-title >Empréstimo</mat-card-title>
+      <mat-card-title class="h5">Empréstimo</mat-card-title>
       <mat-progress-bar mode="determinate" value="{{(emprestimoUsuario.parcelasPagas/emprestimoUsuario.numeroDeParcelas)*100}}"></mat-progress-bar>
       <mat-card-content>
         <div class="row">
@@ -15,7 +15,7 @@
            Vencimento:
           </div>
           <div class="col" >
-            {{emprestimoUsuario.parcelas[emprestimoUsuario.parcelasPagas].dataVencimento | date}}
+            {{emprestimoUsuario.parcelas[emprestimoUsuario.parcelasPagas].dataVencimento | date:'dd/MM/yyyy'}}
           </div>
           <div class="col" align="right">
             ({{emprestimoUsuario.parcelasPagas}} / {{emprestimoUsuario.numeroDeParcelas}})
@@ -94,6 +94,9 @@
         </mat-list>
       </mat-card-content>
       <mat-card-content align="right">
+        <button mat-raised-button class="m-3" color="primary"(click)="modal.close()">
+          Fechar
+        </button>
         <button mat-raised-button color="accent" (click)="contratarEmprestimo(emprestimo)" (click)="modal.close()">
           Contratar
         </button>
