@@ -127,8 +127,10 @@
           }
         },
         "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {}
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref":"/desafioSerasa/desafioSerasa"
+          }
         }
       }
     }
