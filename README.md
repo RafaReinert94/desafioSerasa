@@ -70,6 +70,9 @@ t: período de tempo
 Score fictício do Serasa para liberar ou não um empréstimo.
 
 ------------------------------------------------------------------------------
+
+Banco de Dados
+
 Utilizei o banco de dados de objetos, o firestore do firebase que me permite 
 criar um ambiente de armazenagem de dados de forma rápida e de fácil resposta.
 
@@ -77,7 +80,7 @@ criar um ambiente de armazenagem de dados de forma rápida e de fácil resposta.
 Criei duas coleções:
 
 1) Uma coleção com uma subcoleção:
-
+```
 usuario ------>	uid    -----> emprestimos ---->	uid					
 		score				dataDaContratação
 		nome				numeroDeParcelas
@@ -89,13 +92,13 @@ usuario ------>	uid    -----> emprestimos ---->	uid
 						valor
 						valorTotal
 
-
+```
 2) E outra simples:
-
+```
 emprestimo --->	uid
 		taxa
 		valor
 		scoreMinimo
-
+```
 
 
