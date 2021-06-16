@@ -60,11 +60,12 @@ ng add angular-cli-ghpages (criação da página no github)
 Dados utilizados no desafio:
 
 Fórmula do Juros Composto utilizado no desafio: M = C(1+i)^t
+```
 M: montante
 C: capital
 i: taxa fixa (a taxa foi utilizada 3,95% ao mês)
 t: período de tempo
-
+```
 
 Score fictício do Serasa para liberar ou não um empréstimo.
 
